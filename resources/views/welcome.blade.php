@@ -7,211 +7,17 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <style>
-        /* ===== ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ===== */
-
-        /* Анимация для карточек */
-        .card {
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            cursor: default;
-        }
-
-        .card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(74, 158, 255, 0.3);
-            box-shadow: 0 12px 40px rgba(74, 158, 255, 0.12);
-        }
-
-        .card:hover .card-icon {
-            animation: float 2s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-
-        /* Анимация для кнопок */
-        .btn-primary, .btn-secondary {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::after, .btn-secondary::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .btn-primary:hover::after, .btn-secondary:hover::after {
-            opacity: 1;
-        }
-
-        /* Статус-бар для авторизованных */
-        .user-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.25rem 0.75rem 0.25rem 0.25rem;
-            background: rgba(74, 158, 255, 0.08);
-            border: 1px solid rgba(74, 158, 255, 0.12);
-            border-radius: 9999px;
-            transition: all 0.3s;
-        }
-
-        .user-status:hover {
-            background: rgba(74, 158, 255, 0.12);
-            border-color: rgba(74, 158, 255, 0.2);
-        }
-
-        .user-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4A9EFF, #6DB8FF);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0B0D10;
-            font-weight: 700;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            flex-shrink: 0;
-        }
-
-        .user-name {
-            color: #EAECEE;
-            font-size: 0.875rem;
-            font-weight: 500;
-            white-space: nowrap;
-            max-width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .logout-btn {
-            color: #8892A0;
-            font-size: 0.75rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.375rem;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        .logout-btn:hover {
-            color: #E04A5F;
-            background: rgba(224, 74, 95, 0.08);
-        }
-
-        /* Улучшенный поиск */
-        .search-input {
-            transition: all 0.3s;
-        }
-
-        .search-input:focus {
-            width: 280px;
-        }
-
-        @media (max-width: 1280px) {
-            .search-input:focus {
-                width: 220px;
-            }
-        }
-
-        /* Индикатор загрузки для кнопок */
-        .btn-loading {
-            position: relative;
-            pointer-events: none;
-            opacity: 0.7;
-        }
-
-        .btn-loading::before {
-            content: '...';
-            position: absolute;
-            right: 1rem;
-            animation: dots 1.2s steps(4, end) infinite;
-        }
-
-        @keyframes dots {
-            0% { content: ''; }
-            25% { content: '.'; }
-            50% { content: '..'; }
-            75% { content: '...'; }
-            100% { content: ''; }
-        }
-
-        /* Подсветка активного пункта меню */
-        .nav-link {
-            position: relative;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%) scaleX(0);
-            width: 24px;
-            height: 2px;
-            background: #4A9EFF;
-            border-radius: 2px;
-            box-shadow: 0 0 12px rgba(74, 158, 255, 0.6);
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .nav-link:hover::before {
-            transform: translateX(-50%) scaleX(1);
-        }
-
-        .nav-link.active::before {
-            transform: translateX(-50%) scaleX(1);
-        }
-
-        /* Плавное появление героя */
-        .hero-content {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Адаптивность для маленьких экранов */
-        @media (max-width: 640px) {
-            .user-name {
-                max-width: 60px;
-            }
-            .user-status {
-                padding: 0.25rem 0.5rem 0.25rem 0.25rem;
-            }
-        }
-    </style>
 </head>
 <body>
 
 <!-- ===== ШАПКА ===== -->
 <header>
     <div class="header-container">
-        <!-- Логотип с анимацией -->
-        <a href="/" class="logo" style="display:flex;align-items:center;gap:0.5rem;">
+        <a href="/" class="logo">
             <span style="font-size:1.75rem;">⚡</span>
             EU Holocron
         </a>
 
-        <!-- Навигация -->
         <nav class="nav-links">
             <a href="/" class="nav-link active">Главная</a>
             <a href="#" class="nav-link">Хронология</a>
@@ -220,9 +26,7 @@
             <a href="#" class="nav-link">О проекте</a>
         </nav>
 
-        <!-- Поиск и пользователь -->
         <div style="display:flex;align-items:center;gap:0.75rem;">
-            <!-- Поиск -->
             <div class="search-container">
                 <input type="text" class="search-input" placeholder="Поиск по голокрону..." id="searchInput">
                 <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -230,15 +34,19 @@
                 </svg>
             </div>
 
-            <!-- Блок пользователя (улучшенный) -->
+            <!-- ===== БЛОК АВТОРИЗАЦИИ С АВАТАРКОЙ ===== -->
             @auth
                 <div class="user-status">
-                    <div class="user-avatar">
-                        {{ substr(Auth::user()->name, 0, 1) }}
-                    </div>
-                    <span class="user-name" title="{{ Auth::user()->name }}">
-                        {{ Auth::user()->name }}
-                    </span>
+                    <a href="{{ route('profile') }}" style="display:flex;align-items:center;gap:0.5rem;text-decoration:none;">
+                        <div class="user-avatar" style="background-image:url('{{ Auth::user()->avatar_url }}');background-size:cover;background-position:center;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:#0B0D10;text-transform:uppercase;flex-shrink:0;">
+                            @if(!Auth::user()->getFirstMedia('avatar'))
+                                {{ substr(Auth::user()->name, 0, 1) }}
+                            @endif
+                        </div>
+                        <span class="user-name" title="{{ Auth::user()->name }}">
+                            {{ Auth::user()->name }}
+                        </span>
+                    </a>
                     <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                         @csrf
                         <button type="submit" class="logout-btn" title="Выйти из аккаунта">
@@ -255,7 +63,6 @@
                 </a>
             @endauth
 
-            <!-- Бургер -->
             <button class="burger-btn" onclick="toggleMenu()" aria-label="Меню">
                 <svg style="width:1.5rem;height:1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -264,7 +71,6 @@
         </div>
     </div>
 
-    <!-- Мобильное меню -->
     <div class="mobile-menu" id="mobileMenu">
         <a href="/" class="active">Главная</a>
         <a href="#">Хронология</a>
@@ -275,12 +81,16 @@
 
         @auth
             <div style="padding:0.75rem 1rem;display:flex;align-items:center;gap:0.75rem;">
-                <div class="user-avatar" style="width:32px;height:32px;font-size:0.875rem;">
-                    {{ substr(Auth::user()->name, 0, 1) }}
-                </div>
-                <span style="color:#EAECEE;font-size:0.875rem;font-weight:500;">
-                    {{ Auth::user()->name }}
-                </span>
+                <a href="{{ route('profile') }}" style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:inherit;width:100%;">
+                    <div class="user-avatar" style="width:32px;height:32px;border-radius:50%;background-image:url('{{ Auth::user()->avatar_url }}');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;font-size:0.875rem;font-weight:700;color:#0B0D10;text-transform:uppercase;flex-shrink:0;">
+                        @if(!Auth::user()->getFirstMedia('avatar'))
+                            {{ substr(Auth::user()->name, 0, 1) }}
+                        @endif
+                    </div>
+                    <span style="color:#EAECEE;font-size:0.875rem;font-weight:500;">
+                        {{ Auth::user()->name }}
+                    </span>
+                </a>
             </div>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -364,25 +174,30 @@
             Расширенная вселенная.
         </p>
         <div class="footer-links">
-            <a href="#" style="display:flex;align-items:center;gap:0.25rem;">
-                <span>🐙</span> GitHub
-            </a>
-            <a href="#" style="display:flex;align-items:center;gap:0.25rem;">
-                <span>✉️</span> Обратная связь
-            </a>
+            <a href="#"><span>🐙</span> GitHub</a>
+            <a href="#"><span>✉️</span> Обратная связь</a>
         </div>
     </div>
 </footer>
 
-<!-- ===== SCRIPT ===== -->
+<!-- ===== COOKIES-УВЕДОМЛЕНИЕ ===== -->
+<div class="cookie-banner" id="cookieBanner" role="alert" aria-live="polite">
+    <span class="cookie-icon">🍪</span>
+    <div class="cookie-text">
+        <strong>Мы используем cookies</strong> для улучшения работы сайта.
+        Продолжая использовать наш сайт, вы соглашаетесь с нашей
+        <a href="#" onclick="event.preventDefault();">Политикой конфиденциальности</a>.
+    </div>
+    <button class="cookie-btn" onclick="acceptCookies()">Принять</button>
+</div>
+
+<!-- ===== SCRIPTS ===== -->
 <script>
-    // Мобильное меню
+    // ===== МОБИЛЬНОЕ МЕНЮ =====
     function toggleMenu() {
-        const menu = document.getElementById('mobileMenu');
-        menu.classList.toggle('open');
+        document.getElementById('mobileMenu').classList.toggle('open');
     }
 
-    // Закрытие меню при клике вне
     document.addEventListener('click', function(event) {
         const menu = document.getElementById('mobileMenu');
         const btn = document.querySelector('.burger-btn');
@@ -393,7 +208,7 @@
         }
     });
 
-    // Анимация поиска
+    // ===== ПОИСК =====
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
@@ -406,11 +221,32 @@
         }
     });
 
-    // Отображение приветствия с эффектом печати (для новых пользователей)
+    // ===== COOKIES =====
+    function acceptCookies() {
+        document.getElementById('cookieBanner').classList.remove('show');
+        localStorage.setItem('cookiesAccepted', 'true');
+    }
+
+    function checkCookies() {
+        const isAuth = @auth true @else false @endauth;
+        const cookiesAccepted = localStorage.getItem('cookiesAccepted') === 'true';
+
+        if (isAuth && !cookiesAccepted) {
+            setTimeout(() => {
+                document.getElementById('cookieBanner').classList.add('show');
+            }, 1000);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-        @if(session('success'))
-            console.log('🌟 Добро пожаловать в EU Holocron!');
-        @endif
+        checkCookies();
+
+        const banner = document.getElementById('cookieBanner');
+        banner.addEventListener('click', function(e) {
+            if (e.target.classList.contains('cookie-btn')) {
+                this.classList.remove('show');
+            }
+        });
     });
 </script>
 

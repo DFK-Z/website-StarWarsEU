@@ -1,0 +1,554 @@
+/* ========================================
+   AUTH.CSS — Стили для страниц входа и регистрации
+   Версия: 1.0
+   Стиль: Star Wars EU / Космический неон
+   ======================================== */
+
+/* ===== 1. КОНТЕЙНЕР ===== */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #0B0D10;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Звездный фон */
+.auth-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1.5px 1.5px at 30% 60%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(2px 2px at 70% 40%, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1.5px 1.5px at 15% 85%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(2px 2px at 80% 15%, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1.5px 1.5px at 5% 50%, rgba(255,255,255,0.3), transparent);
+    background-size: 200px 200px;
+    opacity: 0.4;
+    pointer-events: none;
+    animation: twinkleStars 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkleStars {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.6; }
+}
+
+/* Цветные лучи (как световые мечи) */
+.auth-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(74, 158, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(224, 74, 95, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(245, 176, 65, 0.05) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+/* ===== 2. КАРТОЧКА АВТОРИЗАЦИИ ===== */
+.auth-card {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    padding: 2.5rem 2rem;
+    background: rgba(27, 32, 40, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 1.5rem;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    z-index: 1;
+    animation: authSlideUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Градиентная рамка */
+.auth-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 1.5rem;
+    padding: 1px;
+    background: linear-gradient(135deg,
+        rgba(74, 158, 255, 0.25),
+        rgba(224, 74, 95, 0.15),
+        rgba(245, 176, 65, 0.15)
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+@keyframes authSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== 3. ЛОГОТИП ===== */
+.auth-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-logo a {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    background: linear-gradient(to right, #F5B041, #E04A5F, #4A9EFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.auth-logo a:hover {
+    transform: scale(1.05);
+}
+
+.auth-logo p {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #8892A0;
+    -webkit-text-fill-color: #8892A0;
+    letter-spacing: 0.05em;
+}
+
+/* ===== 4. ЗАГОЛОВОК ===== */
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.75rem;
+    color: #EAECEE;
+    letter-spacing: -0.025em;
+}
+
+.auth-title span {
+    background: linear-gradient(to right, #4A9EFF, #6DB8FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== 5. ПОЛЯ ВВОДА ===== */
+.auth-group {
+    margin-bottom: 1.25rem;
+}
+
+.auth-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #8892A0;
+    margin-bottom: 0.375rem;
+    letter-spacing: 0.025em;
+    transition: color 0.3s ease;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    color: #EAECEE;
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.auth-input::placeholder {
+    color: #49525E;
+}
+
+.auth-input:focus {
+    border-color: rgba(74, 158, 255, 0.4);
+    box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.08);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.auth-input:focus + .auth-label,
+.auth-input:focus ~ .auth-label {
+    color: #4A9EFF;
+}
+
+/* ===== 6. ОШИБКИ ===== */
+.auth-error {
+    color: #E04A5F;
+    font-size: 0.8125rem;
+    margin-top: 0.375rem;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.auth-error::before {
+    content: '⚠';
+    font-size: 0.75rem;
+}
+
+/* ===== 7. ЧЕКБОКС ===== */
+.auth-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin: 1.25rem 0 1.5rem;
+}
+
+.auth-checkbox input[type="checkbox"] {
+    width: 1.125rem;
+    height: 1.125rem;
+    accent-color: #4A9EFF;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.auth-checkbox label {
+    font-size: 0.875rem;
+    color: #8892A0;
+    cursor: pointer;
+    -webkit-text-fill-color: #8892A0;
+    transition: color 0.3s ease;
+}
+
+.auth-checkbox:hover label {
+    color: #EAECEE;
+}
+
+/* ===== 8. КНОПКА ОТПРАВКИ ===== */
+.auth-btn {
+    width: 100%;
+    padding: 0.8125rem;
+    background: linear-gradient(135deg, #4A9EFF, #3D8BD9);
+    color: #0B0D10;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.025em;
+}
+
+.auth-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(74, 158, 255, 0.3);
+    background: linear-gradient(135deg, #6DB8FF, #4A9EFF);
+}
+
+.auth-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.2);
+}
+
+.auth-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.auth-btn:hover::after {
+    opacity: 1;
+}
+
+/* ===== 9. ДЕЛИТЕЛЬ ===== */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.75rem 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent);
+}
+
+.auth-divider span {
+    font-size: 0.75rem;
+    color: #49525E;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+}
+
+/* ===== 10. СОЦИАЛЬНЫЕ КНОПКИ ===== */
+.auth-social {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.auth-social button {
+    flex: 1;
+    padding: 0.625rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0.75rem;
+    color: #8892A0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    font-family: inherit;
+}
+
+.auth-social button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #EAECEE;
+    transform: translateY(-1px);
+}
+
+.auth-social button:active {
+    transform: translateY(0);
+}
+
+/* ===== 11. ПОДВАЛ ===== */
+.auth-footer {
+    text-align: center;
+    margin-top: 1.75rem;
+    font-size: 0.875rem;
+    color: #8892A0;
+}
+
+.auth-footer a {
+    color: #4A9EFF;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.auth-footer a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #4A9EFF;
+    transition: width 0.3s ease;
+}
+
+.auth-footer a:hover {
+    color: #6DB8FF;
+}
+
+.auth-footer a:hover::after {
+    width: 100%;
+}
+
+/* ===== 12. ЗВЁЗДЫ-ДЕКОР ===== */
+.auth-star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #4A9EFF;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(74, 158, 255, 0.3);
+    opacity: 0.6;
+    animation: twinkleStar 3s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.auth-star:nth-child(1) { top: 8%; left: 6%; animation-delay: 0s; width: 5px; height: 5px; }
+.auth-star:nth-child(2) { top: 12%; right: 10%; animation-delay: 0.8s; }
+.auth-star:nth-child(3) { bottom: 18%; left: 4%; animation-delay: 0.4s; width: 3px; height: 3px; }
+.auth-star:nth-child(4) { bottom: 22%; right: 6%; animation-delay: 1.2s; width: 6px; height: 6px; background: #F5B041; box-shadow: 0 0 12px rgba(245, 176, 65, 0.3); }
+.auth-star:nth-child(5) { top: 45%; left: 2%; animation-delay: 0.6s; width: 3px; height: 3px; }
+.auth-star:nth-child(6) { top: 55%; right: 3%; animation-delay: 1.6s; background: #E04A5F; box-shadow: 0 0 12px rgba(224, 74, 95, 0.3); }
+.auth-star:nth-child(7) { top: 30%; left: 15%; animation-delay: 0.2s; width: 2px; height: 2px; opacity: 0.4; }
+.auth-star:nth-child(8) { bottom: 40%; right: 18%; animation-delay: 0.9s; width: 2px; height: 2px; opacity: 0.4; }
+
+@keyframes twinkleStar {
+    0% { opacity: 0.2; transform: scale(0.8); }
+    100% { opacity: 0.9; transform: scale(1.2); }
+}
+
+/* ===== 13. АДАПТИВНОСТЬ ===== */
+@media (max-width: 640px) {
+    .auth-card {
+        padding: 1.75rem 1.25rem;
+        border-radius: 1.25rem;
+    }
+
+    .auth-title {
+        font-size: 1.25rem;
+    }
+
+    .auth-logo a {
+        font-size: 1.75rem;
+    }
+
+    .auth-social {
+        flex-direction: column;
+    }
+
+    .auth-social button {
+        padding: 0.75rem;
+    }
+
+    .auth-star:nth-child(3),
+    .auth-star:nth-child(4),
+    .auth-star:nth-child(7),
+    .auth-star:nth-child(8) {
+        display: none;
+    }
+}
+
+@media (max-width: 400px) {
+    .auth-card {
+        padding: 1.25rem 0.875rem;
+    }
+
+    .auth-input {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.875rem;
+    }
+
+    .auth-btn {
+        padding: 0.6875rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ===== 14. ДОПОЛНИТЕЛЬНО: АНИМАЦИЯ ЗАГРУЗКИ ===== */
+.auth-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.auth-loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 0.75rem;
+    background: rgba(11, 13, 16, 0.1);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== 15. УЛУЧШЕННЫЙ СКРОЛЛБАР ===== */
+.auth-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+.auth-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.auth-container::-webkit-scrollbar-thumb {
+    background: rgba(74, 158, 255, 0.3);
+    border-radius: 2px;
+}
+
+/* ========================================
+   ПОКАЗАТЬ/СКРЫТЬ ПАРОЛЬ
+   ======================================== */
+
+/* Контейнер для поля с кнопкой */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Поле ввода пароля с отступом для кнопки */
+.password-wrapper .auth-input {
+    padding-right: 3rem;
+}
+
+/* Кнопка-глаз */
+.toggle-password {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #49525E;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.375rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+    line-height: 1;
+}
+
+.toggle-password:hover {
+    color: #4A9EFF;
+    background: rgba(74, 158, 255, 0.08);
+}
+
+.toggle-password:active {
+    transform: translateY(-50%) scale(0.9);
+}
+
+.toggle-password svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Состояние "показан" - глаз открыт */
+.toggle-password.active {
+    color: #4A9EFF;
+}
+
+.toggle-password.active svg {
+    stroke: #4A9EFF;
+}
+
+/* Анимация для глаза */
+@keyframes eyePulse {
+    0% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-50%) scale(1.1); }
+    100% { transform: translateY(-50%) scale(1); }
+}
+
+.toggle-password:active {
+    animation: eyePulse 0.2s ease;
+}
