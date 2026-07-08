@@ -1,0 +1,540 @@
+/* ===== БАЗОВЫЕ СТИЛИ STAR WARS EU ===== */
+
+/* Базовые цвета */
+:root {
+    --space-dark: #0B0D10;
+    --space-card: #1B2028;
+    --jedi-blue: #4A9EFF;
+    --sith-red: #E04A5F;
+    --republic-gold: #F5B041;
+}
+
+/* Сброс */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: #0B0D10;
+    color: #EAECEE;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== ШАПКА ===== */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    background: rgba(11, 13, 16, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media (min-width: 1024px) {
+    .header-container {
+        padding: 0 2rem;
+        height: 80px;
+    }
+}
+
+/* ===== ЛОГОТИП ===== */
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    background: linear-gradient(to right, #F5B041, #E04A5F, #4A9EFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* ===== НАВИГАЦИЯ ===== */
+.nav-links {
+    display: none;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex;
+    }
+}
+
+.nav-link {
+    padding: 0.5rem 1.25rem;
+    color: #8892A0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #EAECEE;
+    background: rgba(255,255,255,0.05);
+}
+
+.nav-link.active {
+    color: #EAECEE;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 2px;
+    background: #4A9EFF;
+    border-radius: 2px;
+    box-shadow: 0 0 12px rgba(74,158,255,0.6);
+}
+
+/* ===== ПОИСК ===== */
+.search-container {
+    display: none;
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .search-container {
+        display: block;
+    }
+}
+
+.search-input {
+    width: 192px;
+    height: 36px;
+    padding: 0 1rem 0 2.25rem;
+    font-size: 0.875rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 9999px;
+    color: #EAECEE;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: rgba(74,158,255,0.5);
+    box-shadow: 0 0 0 3px rgba(74,158,255,0.15);
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #49525E;
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1rem;
+    height: 1rem;
+    color: #49525E;
+}
+
+/* ===== КНОПКА ВОЙТИ ===== */
+.btn-login {
+    display: none;
+    align-items: center;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #EAECEE;
+    background: rgba(74,158,255,0.15);
+    border: 1px solid rgba(74,158,255,0.2);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-login:hover {
+    background: rgba(74,158,255,0.25);
+    border-color: rgba(74,158,255,0.4);
+}
+
+@media (min-width: 640px) {
+    .btn-login {
+        display: inline-flex;
+    }
+}
+
+.btn-login svg {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+}
+
+/* ===== БУРГЕР-МЕНЮ ===== */
+.burger-btn {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background: none;
+    border: none;
+    color: #EAECEE;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.burger-btn:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+@media (min-width: 768px) {
+    .burger-btn {
+        display: none;
+    }
+}
+
+/* ===== МОБИЛЬНОЕ МЕНЮ ===== */
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(11,13,16,0.95);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 1rem;
+    z-index: 100;
+}
+
+.mobile-menu.open {
+    display: block;
+}
+
+.mobile-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #8892A0;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+}
+
+.mobile-menu a:hover {
+    color: #EAECEE;
+    background: rgba(255,255,255,0.05);
+}
+
+.mobile-menu hr {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 0.5rem 0;
+}
+
+/* ===== ГЕРОИЧЕСКИЙ БЛОК ===== */
+.hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #0B0D10, #0B0D10, rgba(27,32,40,0.8));
+    padding: 4rem 1rem;
+    text-align: center;
+}
+
+@media (min-width: 640px) {
+    .hero {
+        padding: 6rem 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero {
+        padding: 8rem 2rem;
+    }
+}
+
+.hero-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Градиентные лучи (эффект светового меча) */
+.hero-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    background:
+        radial-gradient(circle at 20% 50%, #4A9EFF 0%, transparent 60%),
+        radial-gradient(circle at 80% 70%, #E04A5F 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4A9EFF;
+    border: 1px solid rgba(74,158,255,0.25);
+    border-radius: 9999px;
+    background: rgba(74,158,255,0.06);
+    margin-bottom: 1.5rem;
+}
+
+.hero-badge-dot {
+    width: 0.375rem;
+    height: 0.375rem;
+    background: #4A9EFF;
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.hero-title {
+    font-size: 2.25rem;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+}
+
+@media (min-width: 640px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-title {
+        font-size: 4.5rem;
+    }
+}
+
+.hero-title span {
+    background: linear-gradient(to right, #F5B041, #EAECEE, #4A9EFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    max-width: 42rem;
+    margin: 1.5rem auto 0;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #8892A0;
+}
+
+@media (min-width: 640px) {
+    .hero-subtitle {
+        font-size: 1.25rem;
+    }
+}
+
+.hero-buttons {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* ===== КНОПКИ ===== */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0B0D10;
+    background: #4A9EFF;
+    border: none;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #6DB8FF;
+    box-shadow: 0 0 30px rgba(74,158,255,0.35);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #EAECEE;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.2);
+}
+
+/* ===== КАРТОЧКИ ===== */
+.cards {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+}
+
+@media (min-width: 640px) {
+    .cards {
+        padding: 4rem 2rem;
+    }
+}
+
+.cards-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.card {
+    background: rgba(27,32,40,0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    border-color: rgba(74,158,255,0.2);
+    box-shadow: 0 0 30px rgba(74,158,255,0.08);
+    transform: translateY(-4px);
+}
+
+.card-icon {
+    font-size: 2.25rem;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #EAECEE;
+}
+
+.card-text {
+    font-size: 0.875rem;
+    color: #8892A0;
+    margin-top: 0.5rem;
+}
+
+/* ===== ФУТЕР ===== */
+footer {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    background: rgba(11,13,16,0.5);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    padding: 2rem 1rem;
+}
+
+.footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.footer-text {
+    font-size: 0.875rem;
+    color: #49525E;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-links a {
+    color: #49525E;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #EAECEE;
+}
+
+/* ===== СКРОЛЛБАР ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0B0D10;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4A9EFF;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(74,158,255,0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6DB8FF;
+}

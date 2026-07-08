@@ -1,107 +1,11 @@
-/* resources/css/app.css */
+@import 'tailwindcss';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
 
-/* ===== Базовые переменные ===== */
-:root {
-    --color-space-dark: #0B0D10;
-    --color-space-card: #1B2028;
-    --color-jedi-blue: #4A9EFF;
-    --color-sith-red: #E04A5F;
-    --color-republic-gold: #F5B041;
-}
-
-/* ===== Звездное поле ===== */
-.starfield {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(2px 2px at 30% 60%, rgba(255,255,255,0.6), transparent),
-        radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,255,0.9), transparent),
-        radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.5), transparent),
-        radial-gradient(2px 2px at 90% 80%, rgba(255,255,255,0.7), transparent),
-        radial-gradient(1.5px 1.5px at 15% 85%, rgba(255,255,255,0.4), transparent),
-        radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.6), transparent),
-        radial-gradient(2px 2px at 80% 15%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.3), transparent),
-        radial-gradient(1.5px 1.5px at 5% 50%, rgba(255,255,255,0.5), transparent);
-    background-size: 200px 200px;
-    background-repeat: repeat;
-    opacity: 0.15;
-    animation: twinkle 5s ease-in-out infinite alternate;
-}
-
-@keyframes twinkle {
-    0% { opacity: 0.1; }
-    100% { opacity: 0.3; }
-}
-
-/* ===== Неоновое свечение ===== */
-.neon-blue {
-    box-shadow: 0 0 30px rgba(74, 158, 255, 0.15);
-}
-
-.neon-gold {
-    box-shadow: 0 0 30px rgba(245, 176, 65, 0.15);
-}
-
-/* ===== Плавные анимации ===== */
-.fade-in {
-    animation: fadeIn 0.8s ease forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ===== Кастомный скроллбар ===== */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #0B0D10;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #4A9EFF;
-    border-radius: 4px;
-    box-shadow: 0 0 10px rgba(74, 158, 255, 0.3);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #6DB8FF;
-}
-
-/* ===== Glass-эффект для карточек (будет использоваться позже) ===== */
-.glass {
-    background: rgba(27, 32, 40, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* ===== Улучшенный фокус для инпутов ===== */
-.input-focus {
-    @apply focus:border-jedi-blue/50 focus:ring-2 focus:ring-jedi-blue/20 focus:outline-none transition-all;
-}
-
-/* ===== Медиа-запросы для мобильных ===== */
-@media (max-width: 640px) {
-    .hero-title {
-        font-size: 2.5rem;
-        line-height: 1.2;
-    }
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
 }
