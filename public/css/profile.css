@@ -1,0 +1,386 @@
+/* ========================================
+   PROFILE.CSS — Стили для личного кабинета
+   Версия: 1.0
+   ======================================== */
+
+.profile-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+.profile-sidebar {
+    background: rgba(27, 32, 40, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
+
+@media (max-width: 768px) {
+    .profile-sidebar {
+        position: static;
+    }
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4A9EFF, #6DB8FF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #0B0D10;
+    margin: 0 auto 1rem;
+    text-transform: uppercase;
+    box-shadow: 0 0 40px rgba(74, 158, 255, 0.2);
+    border: 3px solid rgba(74, 158, 255, 0.2);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 60px rgba(74, 158, 255, 0.3);
+}
+
+.profile-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.profile-email {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.profile-member-since {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profile-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.profile-sidebar-nav a {
+    padding: 0.625rem 1rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.profile-sidebar-nav a:hover {
+    background: rgba(74, 158, 255, 0.08);
+    color: var(--text-primary);
+}
+
+.profile-sidebar-nav a.active {
+    background: rgba(74, 158, 255, 0.12);
+    color: #4A9EFF;
+    border: 1px solid rgba(74, 158, 255, 0.15);
+}
+
+.profile-content {
+    background: rgba(27, 32, 40, 0.4);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+.profile-content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+/* ===== СТАТИСТИКА ===== */
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.profile-stat {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.profile-stat:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
+}
+
+.profile-stat-number {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #4A9EFF;
+    display: block;
+}
+
+.profile-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* ===== АЛЕРТЫ ===== */
+.alert {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.alert-success {
+    background: rgba(74, 158, 255, 0.08);
+    border: 1px solid rgba(74, 158, 255, 0.15);
+    color: #4A9EFF;
+}
+
+.alert-danger {
+    background: rgba(224, 74, 95, 0.08);
+    border: 1px solid rgba(224, 74, 95, 0.15);
+    color: #E04A5F;
+}
+
+/* ===== ФОРМЫ ===== */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.375rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: rgba(74, 158, 255, 0.4);
+    box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.form-input-file {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.form-input-file:hover {
+    border-color: rgba(74, 158, 255, 0.3);
+    background: rgba(74, 158, 255, 0.05);
+}
+
+.form-input-file::-webkit-file-upload-button {
+    padding: 0.5rem 1rem;
+    background: rgba(74, 158, 255, 0.15);
+    border: none;
+    border-radius: 0.5rem;
+    color: #4A9EFF;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-input-file::-webkit-file-upload-button:hover {
+    background: rgba(74, 158, 255, 0.25);
+}
+
+.form-error {
+    color: #E04A5F;
+    font-size: 0.8125rem;
+    margin-top: 0.375rem;
+}
+
+/* ===== КНОПКИ ===== */
+.btn-save {
+    padding: 0.75rem 2rem;
+    background: linear-gradient(135deg, #4A9EFF, #3D8BD9);
+    color: #0B0D10;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+}
+
+.btn-cancel {
+    padding: 0.75rem 2rem;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* ===== АВАТАРКА (ПРЕДПРОСМОТР) ===== */
+.avatar-preview {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.avatar-preview img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(74, 158, 255, 0.2);
+}
+
+.avatar-preview .info {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.avatar-preview .info strong {
+    color: var(--text-primary);
+}
+
+/* ===== ПОДСКАЗКА ДЛЯ ПАРОЛЯ ===== */
+.password-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.375rem;
+}
+
+.password-hint code {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+}
+
+/* ===== ИНФОРМАЦИЯ ОБ АККАУНТЕ ===== */
+.account-info {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.account-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.account-info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.account-info-item:last-child {
+    border-bottom: none;
+}
+
+.account-info-item .label {
+    color: var(--text-secondary);
+}
+
+.account-info-item .value {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.account-info-item .value.status {
+    color: #4A9EFF;
+}

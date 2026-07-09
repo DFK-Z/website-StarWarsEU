@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable
 {
-    use HasFactory, Notifiable, InteractsWithMedia;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
         'email',
         'password',
+        'avatar', // <-- ДОБАВЬТЕ ЭТО
     ];
 
     protected $hidden = [
@@ -37,28 +35,9 @@ class User extends Authenticatable implements HasMedia
      */
     public function getAvatarUrlAttribute(): string
     {
-        $avatar = $this->getFirstMedia('avatar');
-        if ($avatar) {
-            return $avatar->getUrl('thumb');
+        if ($this->avatar) {
+            return asset('storage/' . $this->avatar);
         }
-        // Дефолтная аватарка (UI Avatars)
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=4A9EFF&color=0B0D10&size=100&font-size=0.5';
-    }
-
-    /**
-     * Регистрируем коллекции медиа
-     */
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('avatar')
-            ->singleFile()
-            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp'])
-            ->registerMediaConversions(function (Media $media) {
-                $this->addMediaConversion('thumb')
-                    ->width(200)
-                    ->height(200)
-                    ->sharpen(10)
-                    ->nonQueued();
-            });
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=4A9EFF&color=0B0D10&size=100';
     }
 }

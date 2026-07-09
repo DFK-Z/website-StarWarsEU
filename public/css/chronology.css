@@ -1,0 +1,564 @@
+/* ========================================
+   CHRONOLOGY.CSS — Стили для хронологии
+   ======================================== */
+
+.chronology-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* ===== ЗАГОЛОВОК ===== */
+.chronology-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.chronology-header-content h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    background: linear-gradient(to right, #F5B041, #E04A5F, #4A9EFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.chronology-header-content p {
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    margin-top: 0.25rem;
+}
+
+.btn-create {
+    padding: 0.625rem 1.5rem;
+    background: linear-gradient(135deg, #4A9EFF, #3D8BD9);
+    color: #0B0D10;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.btn-create:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+}
+
+/* ===== ФИЛЬТРЫ ===== */
+.chronology-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.filter-btn {
+    padding: 0.375rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.filter-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.filter-btn.active {
+    background: rgba(74, 158, 255, 0.12);
+    color: #4A9EFF;
+    border-color: rgba(74, 158, 255, 0.2);
+}
+
+/* ===== ТАЙМЛАЙН ===== */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.timeline-item {
+    display: flex;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.timeline-item-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    padding-top: 0.5rem;
+    width: 20px;
+}
+
+.timeline-item-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #4A9EFF;
+    border: 2px solid rgba(74, 158, 255, 0.2);
+    box-shadow: 0 0 20px rgba(74, 158, 255, 0.15);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.timeline-item-line {
+    width: 2px;
+    flex: 1;
+    background: linear-gradient(to bottom, rgba(74, 158, 255, 0.2), rgba(74, 158, 255, 0.05));
+    margin-top: 0.25rem;
+}
+
+.timeline-item:last-child .timeline-item-line {
+    display: none;
+}
+
+.timeline-item-content {
+    flex: 1;
+    padding-bottom: 2rem;
+}
+
+/* ===== КАРТОЧКА СОБЫТИЯ ===== */
+.chronology-card {
+    background: rgba(27, 32, 40, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    gap: 1.25rem;
+    padding: 1rem;
+}
+
+.chronology-card:hover {
+    transform: translateX(6px);
+    border-color: rgba(74, 158, 255, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.chronology-card-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: rgba(74, 158, 255, 0.05);
+}
+
+.chronology-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chronology-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.chronology-card-type {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.25rem;
+}
+
+.type-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.0625rem 0.5rem;
+    border-radius: 9999px;
+}
+
+.type-badge.novel {
+    background: rgba(74, 158, 255, 0.12);
+    color: #4A9EFF;
+}
+
+.type-badge.comic {
+    background: rgba(224, 74, 95, 0.12);
+    color: #E04A5F;
+}
+
+.type-badge.movie {
+    background: rgba(245, 176, 65, 0.12);
+    color: #F5B041;
+}
+
+.type-badge.game {
+    background: rgba(155, 89, 182, 0.12);
+    color: #9B59B6;
+}
+
+.type-badge.other {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+}
+
+.chronology-card-year {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.chronology-card-info h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.125rem;
+}
+
+.chronology-card-author {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: block;
+}
+
+.chronology-card-era {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: inline-block;
+    margin-top: 0.125rem;
+    padding: 0.0625rem 0.375rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.25rem;
+}
+
+.chronology-card-description {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    margin-top: 0.375rem;
+    line-height: 1.5;
+}
+
+.chronology-card-footer {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.chronology-card-footer .btn-edit,
+.chronology-card-footer .btn-delete {
+    padding: 0.25rem 0.5rem;
+    background: transparent;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+}
+
+.chronology-card-footer .btn-edit {
+    color: #4A9EFF;
+}
+
+.chronology-card-footer .btn-edit:hover {
+    background: rgba(74, 158, 255, 0.08);
+}
+
+.chronology-card-footer .btn-delete {
+    color: #E04A5F;
+}
+
+.chronology-card-footer .btn-delete:hover {
+    background: rgba(224, 74, 95, 0.08);
+}
+
+/* ===== ПУСТОЕ СОСТОЯНИЕ ===== */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(27, 32, 40, 0.3);
+    border-radius: 1rem;
+    border: 2px dashed rgba(255, 255, 255, 0.05);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+}
+
+.btn-create-empty {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.625rem 1.5rem;
+    background: linear-gradient(135deg, #4A9EFF, #3D8BD9);
+    color: #0B0D10;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-create-empty:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+}
+
+/* ===== ПАГИНАЦИЯ ===== */
+.pagination-wrapper {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 640px) {
+    .chronology-card {
+        flex-direction: column;
+        padding: 0.75rem;
+    }
+
+    .chronology-card-image {
+        width: 100%;
+        height: 150px;
+    }
+
+    .chronology-card-footer {
+        margin-top: 0.5rem;
+    }
+
+    .chronology-filters {
+        gap: 0.375rem;
+    }
+
+    .filter-btn {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.625rem;
+    }
+}
+
+/* ===== ФОРМА ===== */
+.chronology-form {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.chronology-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.chronology-form-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.375rem;
+}
+
+.form-label .required {
+    color: #E04A5F;
+    margin-left: 0.25rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.form-input:focus {
+    border-color: rgba(74, 158, 255, 0.4);
+    box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.form-input::placeholder {
+    color: var(--text-muted);
+}
+
+textarea.form-input {
+    resize: vertical;
+    min-height: 120px;
+}
+
+select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238892A0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+.form-input-file {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.form-input-file:hover {
+    border-color: rgba(74, 158, 255, 0.3);
+    background: rgba(74, 158, 255, 0.05);
+}
+
+.form-input-file::-webkit-file-upload-button {
+    padding: 0.5rem 1rem;
+    background: rgba(74, 158, 255, 0.15);
+    border: none;
+    border-radius: 0.5rem;
+    color: #4A9EFF;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-input-file::-webkit-file-upload-button:hover {
+    background: rgba(74, 158, 255, 0.25);
+}
+
+.form-error {
+    color: #E04A5F;
+    font-size: 0.8125rem;
+    margin-top: 0.375rem;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.form-error::before {
+    content: '⚠';
+    font-size: 0.75rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-save {
+    padding: 0.75rem 2rem;
+    background: linear-gradient(135deg, #4A9EFF, #3D8BD9);
+    color: #0B0D10;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+}
+
+.btn-cancel {
+    padding: 0.75rem 2rem;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 640px) {
+    .chronology-form {
+        padding: 1rem;
+    }
+
+    .chronology-form-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn-save,
+    .form-actions .btn-cancel {
+        width: 100%;
+        justify-content: center;
+    }
+}
