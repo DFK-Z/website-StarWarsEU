@@ -22,7 +22,7 @@
         <nav class="nav-links">
             <a href="/" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Главная</a>
             <!-- ===== ИСПРАВЛЕННАЯ ССЫЛКА НА ХРОНОЛОГИЮ ===== -->
-            <a href="{{ route('chronology.index') }}" class="nav-link {{ request()->routeIs('chronology.*') ? 'active' : '' }}">Хронология</a>
+            <a href="{{ route('timeline.index') }}" class="nav-link {{ request()->routeIs('timeline.*') ? 'active' : '' }}">Хронология</a>
             <a href="{{ route('characters.index') }}" class="nav-link {{ request()->routeIs('characters.*') ? 'active' : '' }}">Персонажи</a>
             <a href="#" class="nav-link">Библиотека</a>
             <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">О проекте</a>
@@ -69,7 +69,7 @@
     <div class="mobile-menu" id="mobileMenu">
         <a href="/" class="{{ request()->routeIs('home') ? 'active' : '' }}">Главная</a>
         <!-- ===== ИСПРАВЛЕННАЯ ССЫЛКА НА ХРОНОЛОГИЮ В МОБИЛЬНОМ МЕНЮ ===== -->
-        <a href="{{ route('chronology.index') }}" class="{{ request()->routeIs('chronology.*') ? 'active' : '' }}">Хронология</a>
+        <a href="{{ route('timeline.index') }}" class="{{ request()->routeIs('timeline.*') ? 'active' : '' }}">Хронология</a>
         <a href="{{ route('characters.index') }}" class="{{ request()->routeIs('characters.*') ? 'active' : '' }}">Персонажи</a>
         <a href="#">Библиотека</a>
         <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}">О проекте</a>

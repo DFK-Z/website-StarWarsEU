@@ -7,7 +7,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\TimelineController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,4 +42,4 @@ Route::middleware('auth')->group(function () {
 
 // ===== ПЕРСОНАЖИ =====
 Route::resource('characters', CharacterController::class);
-Route::resource('chronology', TimelineController::class);
+Route::resource('timeline', TimelineController::class);

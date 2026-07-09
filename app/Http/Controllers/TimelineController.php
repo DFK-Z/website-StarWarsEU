@@ -9,30 +9,29 @@ use Illuminate\Support\Facades\Storage;
 class TimelineController extends Controller
 {
     /**
-     * Список всех событий хронологии
+     * Список событий с фильтрацией
      */
     public function index(Request $request)
     {
         $query = Timeline::query();
 
-        // Фильтрация по типу
+        // Фильтр по типу
         if ($request->has('type') && $request->type != 'all') {
             $query->where('type', $request->type);
         }
 
-        $timeline = $query->orderBy('year_start')->paginate(15);
-        $types = ['novel', 'comic', 'movie', 'game', 'other'];
+        $timelines = $query->orderBy('year')->paginate(15);
         $selectedType = $request->get('type', 'all');
 
-        return view('chronology.index', compact('timeline', 'types', 'selectedType'));
+        return view('timeline.index', compact('timelines', 'selectedType'));
     }
 
     /**
-     * Страница одного события
+     * Страница события
      */
     public function show(Timeline $timeline)
     {
-        return view('chronology.show', compact('timeline'));
+        return view('timeline.show', compact('timeline'));
     }
 
     /**
@@ -40,7 +39,7 @@ class TimelineController extends Controller
      */
     public function create()
     {
-        return view('chronology.create');
+        return view('timeline.create');
     }
 
     /**
@@ -50,81 +49,26 @@ class TimelineController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'type' => 'required|in:novel,comic,movie,game,other',
-            'year_start' => 'required|numeric|min:-10000|max:10000',
-            'year_end' => 'nullable|numeric|min:-10000|max:10000',
-            'era' => 'nullable|string|max:255',
-            'author' => 'nullable|string|max:255',
-            'publisher' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
+            'year' => 'required|numeric|min:-10000|max:10000',
+            'type' => 'required|in:novel,comic,game,movie,general',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'description' => 'nullable|string',
+            'character_id' => 'nullable|exists:characters,id',
+            'planet_id' => 'nullable|exists:planets,id',
         ]);
 
-        $data = $request->except(['image']);
+        $data = $request->except('image');
+        $data['slug'] = Timeline::generateSlug($request->title);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('chronology', 'public');
-            $data['image'] = $path;
+            $data['image'] = $request->file('image')->store('timelines', 'public');
         }
 
         Timeline::create($data);
 
-        return redirect()->route('chronology.index')
+        return redirect()->route('timeline.index')
             ->with('success', 'Событие "' . $request->title . '" успешно создано!');
     }
 
-    /**
-     * Форма редактирования
-     */
-    public function edit(Timeline $timeline)
-    {
-        return view('chronology.edit', compact('timeline'));
-    }
-
-    /**
-     * Обновление
-     */
-    public function update(Request $request, Timeline $timeline)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'type' => 'required|in:novel,comic,movie,game,other',
-            'year_start' => 'required|numeric|min:-10000|max:10000',
-            'year_end' => 'nullable|numeric|min:-10000|max:10000',
-            'era' => 'nullable|string|max:255',
-            'author' => 'nullable|string|max:255',
-            'publisher' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-        ]);
-
-        $data = $request->except(['image']);
-
-        if ($request->hasFile('image')) {
-            if ($timeline->image) {
-                Storage::disk('public')->delete($timeline->image);
-            }
-            $path = $request->file('image')->store('chronology', 'public');
-            $data['image'] = $path;
-        }
-
-        $timeline->update($data);
-
-        return redirect()->route('chronology.index')
-            ->with('success', 'Событие "' . $request->title . '" успешно обновлено!');
-    }
-
-    /**
-     * Удаление
-     */
-    public function destroy(Timeline $timeline)
-    {
-        if ($timeline->image) {
-            Storage::disk('public')->delete($timeline->image);
-        }
-        $timeline->delete();
-
-        return redirect()->route('chronology.index')
-            ->with('success', 'Событие успешно удалено!');
-    }
+    // edit, update, destroy — аналогично CharacterController
 }

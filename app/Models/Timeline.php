@@ -1,64 +1,129 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Timeline;
+use App\Models\Character;
+use App\Models\Planet;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class Timeline extends Model
+class TimelineController extends Controller
 {
-    use HasFactory;
-
-    protected $fillable = [
-        'title',
-        'type',
-        'year_start',
-        'year_end',
-        'era',
-        'author',
-        'publisher',
-        'description',
-        'image',
-    ];
-
-    protected $table = 'timeline';
-
     /**
-     * Получить URL изображения
+     * Список событий с фильтрацией
      */
-    public function getImageUrlAttribute(): string
+    public function index(Request $request)
     {
-        if ($this->image) {
-            return asset('storage/' . $this->image);
+        $query = Timeline::query();
+
+        if ($request->has('type') && $request->type != 'all') {
+            $query->where('type', $request->type);
         }
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->title) . '&background=4A9EFF&color=0B0D10&size=200&font-size=0.3';
+
+        $timelines = $query->orderBy('year')->paginate(15);
+        $selectedType = $request->get('type', 'all');
+
+        return view('timeline.index', compact('timelines', 'selectedType'));
     }
 
     /**
-     * Получить тип с эмодзи
+     * Страница события
      */
-    public function getTypeEmojiAttribute(): string
+    public function show(Timeline $timeline)
     {
-        return [
-            'novel' => '📖',
-            'comic' => '📚',
-            'movie' => '🎬',
-            'game' => '🎮',
-            'other' => '📌',
-        ][$this->type] ?? '📌';
+        return view('timeline.show', compact('timeline'));
     }
 
     /**
-     * Получить цвет для типа
+     * Форма создания
      */
-    public function getTypeColorAttribute(): string
+    public function create()
     {
-        return [
-            'novel' => 'bg-green-500',
-            'comic' => 'bg-red-500',
-            'movie' => 'bg-yellow-500',
-            'game' => 'bg-purple-500',
-            'other' => 'bg-gray-500',
-        ][$this->type] ?? 'bg-gray-500';
+        $characters = Character::orderBy('name')->get();
+        $planets = Planet::orderBy('name')->get();
+        return view('timeline.create', compact('characters', 'planets'));
+    }
+
+    /**
+     * Сохранение
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'year' => 'required|numeric|min:-10000|max:10000',
+            'type' => 'required|in:novel,comic,game,movie,general',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'description' => 'nullable|string',
+            'character_id' => 'nullable|exists:characters,id',
+            'planet_id' => 'nullable|exists:planets,id',
+        ]);
+
+        $data = $request->except('image');
+        $data['slug'] = Timeline::generateSlug($request->title);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('timelines', 'public');
+        }
+
+        Timeline::create($data);
+
+        return redirect()->route('timeline.index')
+            ->with('success', 'Событие "' . $request->title . '" успешно создано!');
+    }
+
+    /**
+     * Форма редактирования
+     */
+    public function edit(Timeline $timeline)
+    {
+        $characters = Character::orderBy('name')->get();
+        $planets = Planet::orderBy('name')->get();
+        return view('timeline.edit', compact('timeline', 'characters', 'planets'));
+    }
+
+    /**
+     * Обновление
+     */
+    public function update(Request $request, Timeline $timeline)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'year' => 'required|numeric|min:-10000|max:10000',
+            'type' => 'required|in:novel,comic,game,movie,general',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'description' => 'nullable|string',
+            'character_id' => 'nullable|exists:characters,id',
+            'planet_id' => 'nullable|exists:planets,id',
+        ]);
+
+        $data = $request->except('image');
+
+        if ($request->hasFile('image')) {
+            if ($timeline->image) {
+                Storage::disk('public')->delete($timeline->image);
+            }
+            $data['image'] = $request->file('image')->store('timelines', 'public');
+        }
+
+        $timeline->update($data);
+
+        return redirect()->route('timeline.index')
+            ->with('success', 'Событие "' . $request->title . '" успешно обновлено!');
+    }
+
+    /**
+     * Удаление
+     */
+    public function destroy(Timeline $timeline)
+    {
+        if ($timeline->image) {
+            Storage::disk('public')->delete($timeline->image);
+        }
+        $timeline->delete();
+
+        return redirect()->route('timeline.index')
+            ->with('success', 'Событие успешно удалено!');
     }
 }
