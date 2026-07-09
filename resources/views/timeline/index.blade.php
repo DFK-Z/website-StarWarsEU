@@ -11,7 +11,7 @@
     <div class="timeline-header">
         <div class="timeline-header-content">
             <h1>📜 Хронология</h1>
-            <p>События расширенной вселенной в хронологическом порядке</p>
+            <p>Хранители времени далёкой-далёкой галактики</p>
         </div>
         @auth
             <a href="{{ route('timeline.create') }}" class="btn-create">
@@ -24,53 +24,60 @@
         <div class="alert alert-success">✅ {{ session('success') }}</div>
     @endif
 
-    <!-- Фильтры -->
+    <!-- Фильтрация -->
     <div class="timeline-filters">
-        <a href="{{ route('timeline.index') }}"
-           class="filter-btn {{ $selectedType == 'all' ? 'active' : '' }}">
-            🌟 Все
-        </a>
-        <a href="{{ route('timeline.index', ['type' => 'novel']) }}"
-           class="filter-btn novel {{ $selectedType == 'novel' ? 'active' : '' }}">
-            📖 Романы
-        </a>
-        <a href="{{ route('timeline.index', ['type' => 'comic']) }}"
-           class="filter-btn comic {{ $selectedType == 'comic' ? 'active' : '' }}">
-            📚 Комиксы
-        </a>
-        <a href="{{ route('timeline.index', ['type' => 'game']) }}"
-           class="filter-btn game {{ $selectedType == 'game' ? 'active' : '' }}">
-            🎮 Игры
-        </a>
-        <a href="{{ route('timeline.index', ['type' => 'movie']) }}"
-           class="filter-btn movie {{ $selectedType == 'movie' ? 'active' : '' }}">
-            🎬 Фильмы
-        </a>
-        <a href="{{ route('timeline.index', ['type' => 'general']) }}"
-           class="filter-btn general {{ $selectedType == 'general' ? 'active' : '' }}">
-            🌟 Общее
-        </a>
+        @foreach($types as $key => $label)
+            <a href="{{ route('timeline.index', ['type' => $key]) }}"
+               class="filter-btn {{ $currentType == $key ? 'active' : '' }}">
+                {{ $label }}
+            </a>
+        @endforeach
     </div>
 
-    <!-- Список событий -->
+    <!-- Хронология -->
     <div class="timeline-list">
-        @forelse($timelines as $timeline)
-            <a href="{{ route('timeline.show', $timeline) }}" class="timeline-item">
+        @forelse($grouped as $year => $items)
+            @php
+                $yearInt = (int) $year;
+            @endphp
+            <div class="timeline-year-group">
                 <div class="timeline-year">
-                    {{ $timeline->year_display }}
+                    <span class="year-label">
+                        {{ $yearInt < 0 ? abs($yearInt) . ' ДБЯ' : $yearInt . ' ПБЯ' }}
+                    </span>
+                    <span class="year-line"></span>
                 </div>
-                <div class="timeline-content">
-                    <div class="timeline-title">
-                        {{ $timeline->title }}
-                        <span class="timeline-type {{ $timeline->type }}">
-                            {{ $timeline->type_label }}
-                        </span>
-                    </div>
-                    <div class="timeline-description">
-                        {{ Str::limit($timeline->description, 150) }}
-                    </div>
+                <div class="timeline-items">
+                    @foreach($items as $item)
+                        <a href="{{ route('timeline.show', $item) }}" class="timeline-item" style="border-left-color: {{ $item->type_color }};">
+                            <div class="timeline-item-icon">
+                                <span style="color: {{ $item->type_color }};">{{ $item->type_emoji }}</span>
+                            </div>
+                            <div class="timeline-item-content">
+                                <h3>{{ $item->title }}</h3>
+                                <span class="timeline-item-type" style="color: {{ $item->type_color }};">
+                                    {{ $item->type_name }}
+                                </span>
+                                @if($item->description)
+                                    <p>{{ Str::limit($item->description, 120) }}</p>
+                                @endif
+                            </div>
+                            @auth
+                                <div class="timeline-item-actions">
+                                    <a href="{{ route('timeline.edit', $item) }}" class="btn-edit">✏️</a>
+                                    <form method="POST" action="{{ route('timeline.destroy', $item) }}"
+                                          style="display:inline;"
+                                          onsubmit="return confirm('Вы уверены, что хотите удалить это событие?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete">🗑️</button>
+                                    </form>
+                                </div>
+                            @endauth
+                        </a>
+                    @endforeach
                 </div>
-            </a>
+            </div>
         @empty
             <div class="empty-state">
                 <span class="empty-icon">📭</span>
@@ -80,10 +87,6 @@
                 @endauth
             </div>
         @endforelse
-    </div>
-
-    <div class="pagination-wrapper">
-        {{ $timelines->links() }}
     </div>
 </div>
 @endsection

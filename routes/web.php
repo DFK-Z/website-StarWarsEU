@@ -42,4 +42,17 @@ Route::middleware('auth')->group(function () {
 
 // ===== ПЕРСОНАЖИ =====
 Route::resource('characters', CharacterController::class);
-Route::resource('timeline', TimelineController::class);
+
+// Хронология
+Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
+Route::get('/timeline/{timeline}', [TimelineController::class, 'show'])->name('timeline.show');
+
+// ===== ХРОНОЛОГИЯ =====
+// ===== ВАЖНО: ИСПОЛЬЗУЙТЕ ЭТОТ ВАРИАНТ! =====
+Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
+Route::get('/timeline/create', [TimelineController::class, 'create'])->name('timeline.create');
+Route::post('/timeline', [TimelineController::class, 'store'])->name('timeline.store');
+Route::get('/timeline/{timeline}', [TimelineController::class, 'show'])->name('timeline.show');
+Route::get('/timeline/{timeline}/edit', [TimelineController::class, 'edit'])->name('timeline.edit');
+Route::put('/timeline/{timeline}', [TimelineController::class, 'update'])->name('timeline.update');
+Route::delete('/timeline/{timeline}', [TimelineController::class, 'destroy'])->name('timeline.destroy');

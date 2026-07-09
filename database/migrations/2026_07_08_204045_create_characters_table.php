@@ -11,8 +11,6 @@ return new class extends Migration
         Schema::create('characters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('alias')->nullable()->after('name');
-            $table->string('lightsaber_color')->nullable()->after('alias');
             $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->string('planet')->nullable();

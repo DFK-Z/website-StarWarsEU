@@ -9,25 +9,39 @@ use Illuminate\Support\Facades\Storage;
 class TimelineController extends Controller
 {
     /**
-     * Список событий с фильтрацией
+     * Список всех событий с фильтрацией
      */
     public function index(Request $request)
     {
-        $query = Timeline::query();
+        $query = Timeline::orderBy('year');
 
-        // Фильтр по типу
+        // Фильтрация по типу
         if ($request->has('type') && $request->type != 'all') {
             $query->where('type', $request->type);
         }
 
-        $timelines = $query->orderBy('year')->paginate(15);
-        $selectedType = $request->get('type', 'all');
+        $timeline = $query->get();
 
-        return view('timeline.index', compact('timelines', 'selectedType'));
+        // Группируем по годам для отображения
+        $grouped = $timeline->groupBy('year');
+
+        // Получаем список всех типов для фильтра
+        $types = [
+            'all' => 'Все',
+            'novel' => '📖 Романы',
+            'comic' => '📚 Комиксы',
+            'movie' => '🎬 Фильмы',
+            'game' => '🎮 Игры',
+            'event' => '⚔️ События',
+        ];
+
+        $currentType = $request->get('type', 'all');
+
+        return view('timeline.index', compact('grouped', 'types', 'currentType'));
     }
 
     /**
-     * Страница события
+     * Страница одного события
      */
     public function show(Timeline $timeline)
     {
@@ -35,7 +49,7 @@ class TimelineController extends Controller
     }
 
     /**
-     * Форма создания
+     * Форма создания (только для админа)
      */
     public function create()
     {
@@ -49,19 +63,18 @@ class TimelineController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'year' => 'required|numeric|min:-10000|max:10000',
-            'type' => 'required|in:novel,comic,game,movie,general',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'year' => 'required|integer|min:-10000|max:10000',
+            'type' => 'required|in:novel,comic,movie,game,event',
             'description' => 'nullable|string',
-            'character_id' => 'nullable|exists:characters,id',
-            'planet_id' => 'nullable|exists:planets,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
-        $data = $request->except('image');
+        $data = $request->except(['image']);
         $data['slug'] = Timeline::generateSlug($request->title);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('timelines', 'public');
+            $path = $request->file('image')->store('timeline', 'public');
+            $data['image'] = $path;
         }
 
         Timeline::create($data);
@@ -70,5 +83,54 @@ class TimelineController extends Controller
             ->with('success', 'Событие "' . $request->title . '" успешно создано!');
     }
 
-    // edit, update, destroy — аналогично CharacterController
+    /**
+     * Форма редактирования (только для админа)
+     */
+    public function edit(Timeline $timeline)
+    {
+        return view('timeline.edit', compact('timeline'));
+    }
+
+    /**
+     * Обновление
+     */
+    public function update(Request $request, Timeline $timeline)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'year' => 'required|integer|min:-10000|max:10000',
+            'type' => 'required|in:novel,comic,movie,game,event',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+
+        $data = $request->except(['image']);
+
+        if ($request->hasFile('image')) {
+            if ($timeline->image) {
+                Storage::disk('public')->delete($timeline->image);
+            }
+            $path = $request->file('image')->store('timeline', 'public');
+            $data['image'] = $path;
+        }
+
+        $timeline->update($data);
+
+        return redirect()->route('timeline.index')
+            ->with('success', 'Событие "' . $request->title . '" успешно обновлено!');
+    }
+
+    /**
+     * Удаление
+     */
+    public function destroy(Timeline $timeline)
+    {
+        if ($timeline->image) {
+            Storage::disk('public')->delete($timeline->image);
+        }
+        $timeline->delete();
+
+        return redirect()->route('timeline.index')
+            ->with('success', 'Событие успешно удалено!');
+    }
 }

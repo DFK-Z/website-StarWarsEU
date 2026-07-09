@@ -8,22 +8,20 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('timelines', function (Blueprint $table) {
+        Schema::create('timeline', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
             $table->integer('year');
-            $table->enum('type', ['novel', 'comic', 'game', 'movie', 'general'])->default('general');
-            $table->string('image')->nullable();
+            $table->enum('type', ['novel', 'comic', 'movie', 'game', 'event']);
             $table->text('description')->nullable();
-            $table->foreignId('character_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('planet_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('timelines');
+        Schema::dropIfExists('timeline');
     }
 };

@@ -1,129 +1,88 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
-use App\Models\Timeline;
-use App\Models\Character;
-use App\Models\Planet;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class TimelineController extends Controller
+class Timeline extends Model
 {
-    /**
-     * Список событий с фильтрацией
-     */
-    public function index(Request $request)
-    {
-        $query = Timeline::query();
+    use HasFactory;
 
-        if ($request->has('type') && $request->type != 'all') {
-            $query->where('type', $request->type);
+    protected $table = 'timeline';
+
+    protected $fillable = [
+        'title',
+        'slug',
+        'year',
+        'type',
+        'description',
+        'image',
+    ];
+
+    /**
+     * Получить цвет для типа
+     */
+    public function getTypeColorAttribute(): string
+    {
+        $colors = [
+            'novel' => '#39FF14',
+            'comic' => '#FF1744',
+            'movie' => '#F1C40F',
+            'game' => '#9B59B6',
+            'event' => '#4A9EFF',
+        ];
+        return $colors[$this->type] ?? '#8892A0';
+    }
+
+    /**
+     * Получить эмодзи для типа
+     */
+    public function getTypeEmojiAttribute(): string
+    {
+        $emojis = [
+            'novel' => '📖',
+            'comic' => '📚',
+            'movie' => '🎬',
+            'game' => '🎮',
+            'event' => '⚔️',
+        ];
+        return $emojis[$this->type] ?? '📌';
+    }
+
+    /**
+     * Получить название типа на русском
+     */
+    public function getTypeNameAttribute(): string
+    {
+        $names = [
+            'novel' => 'Роман',
+            'comic' => 'Комикс',
+            'movie' => 'Фильм',
+            'game' => 'Игра',
+            'event' => 'Событие',
+        ];
+        return $names[$this->type] ?? 'Неизвестно';
+    }
+
+    /**
+     * Получить URL изображения
+     */
+    public function getImageUrlAttribute(): string
+    {
+        if ($this->image) {
+            return asset('storage/' . $this->image);
         }
-
-        $timelines = $query->orderBy('year')->paginate(15);
-        $selectedType = $request->get('type', 'all');
-
-        return view('timeline.index', compact('timelines', 'selectedType'));
+        return asset('images/placeholder-timeline.jpg');
     }
 
     /**
-     * Страница события
+     * Создать slug из названия
      */
-    public function show(Timeline $timeline)
+    public static function generateSlug(string $title): string
     {
-        return view('timeline.show', compact('timeline'));
-    }
-
-    /**
-     * Форма создания
-     */
-    public function create()
-    {
-        $characters = Character::orderBy('name')->get();
-        $planets = Planet::orderBy('name')->get();
-        return view('timeline.create', compact('characters', 'planets'));
-    }
-
-    /**
-     * Сохранение
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'year' => 'required|numeric|min:-10000|max:10000',
-            'type' => 'required|in:novel,comic,game,movie,general',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'description' => 'nullable|string',
-            'character_id' => 'nullable|exists:characters,id',
-            'planet_id' => 'nullable|exists:planets,id',
-        ]);
-
-        $data = $request->except('image');
-        $data['slug'] = Timeline::generateSlug($request->title);
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('timelines', 'public');
-        }
-
-        Timeline::create($data);
-
-        return redirect()->route('timeline.index')
-            ->with('success', 'Событие "' . $request->title . '" успешно создано!');
-    }
-
-    /**
-     * Форма редактирования
-     */
-    public function edit(Timeline $timeline)
-    {
-        $characters = Character::orderBy('name')->get();
-        $planets = Planet::orderBy('name')->get();
-        return view('timeline.edit', compact('timeline', 'characters', 'planets'));
-    }
-
-    /**
-     * Обновление
-     */
-    public function update(Request $request, Timeline $timeline)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'year' => 'required|numeric|min:-10000|max:10000',
-            'type' => 'required|in:novel,comic,game,movie,general',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'description' => 'nullable|string',
-            'character_id' => 'nullable|exists:characters,id',
-            'planet_id' => 'nullable|exists:planets,id',
-        ]);
-
-        $data = $request->except('image');
-
-        if ($request->hasFile('image')) {
-            if ($timeline->image) {
-                Storage::disk('public')->delete($timeline->image);
-            }
-            $data['image'] = $request->file('image')->store('timelines', 'public');
-        }
-
-        $timeline->update($data);
-
-        return redirect()->route('timeline.index')
-            ->with('success', 'Событие "' . $request->title . '" успешно обновлено!');
-    }
-
-    /**
-     * Удаление
-     */
-    public function destroy(Timeline $timeline)
-    {
-        if ($timeline->image) {
-            Storage::disk('public')->delete($timeline->image);
-        }
-        $timeline->delete();
-
-        return redirect()->route('timeline.index')
-            ->with('success', 'Событие успешно удалено!');
+        $slug = \Str::slug($title);
+        $count = static::where('slug', 'LIKE', $slug . '%')->count();
+        return $count ? $slug . '-' . ($count + 1) : $slug;
     }
 }

@@ -28,9 +28,9 @@
             <!-- Год -->
             <div class="form-group">
                 <label for="year" class="form-label">Год <span class="required">*</span></label>
-                <input id="year" type="number" name="year" value="{{ old('year', $timeline->year) }}" class="form-input" placeholder="Например: -32 (32 ДБЯ) или 5 (5 ПБЯ)" required>
+                <input id="year" type="number" name="year" value="{{ old('year', $timeline->year) }}" class="form-input" required>
                 @error('year') <p class="form-error">{{ $message }}</p> @enderror
-                <div class="form-hint">💡 Отрицательные числа = ДБЯ (До Битвы при Явине)</div>
+                <div class="form-hint">💡 Отрицательные числа = ДБЯ (До Битвы при Явине), положительные = ПБЯ</div>
             </div>
 
             <!-- Тип -->
@@ -40,56 +40,27 @@
                     <option value="">Выберите тип</option>
                     <option value="novel" {{ old('type', $timeline->type) == 'novel' ? 'selected' : '' }}>📖 Роман</option>
                     <option value="comic" {{ old('type', $timeline->type) == 'comic' ? 'selected' : '' }}>📚 Комикс</option>
-                    <option value="game" {{ old('type', $timeline->type) == 'game' ? 'selected' : '' }}>🎮 Игра</option>
                     <option value="movie" {{ old('type', $timeline->type) == 'movie' ? 'selected' : '' }}>🎬 Фильм</option>
-                    <option value="general" {{ old('type', $timeline->type) == 'general' ? 'selected' : '' }}>🌟 Общее</option>
+                    <option value="game" {{ old('type', $timeline->type) == 'game' ? 'selected' : '' }}>🎮 Игра</option>
+                    <option value="event" {{ old('type', $timeline->type) == 'event' ? 'selected' : '' }}>⚔️ Событие</option>
                 </select>
                 @error('type') <p class="form-error">{{ $message }}</p> @enderror
-                <div class="form-hint">💡 Выберите тип события.</div>
-            </div>
-
-            <!-- Связь с персонажем -->
-            <div class="form-group">
-                <label for="character_id" class="form-label">Связанный персонаж</label>
-                <select id="character_id" name="character_id" class="form-input">
-                    <option value="">Не выбран</option>
-                    @foreach($characters ?? [] as $character)
-                        <option value="{{ $character->id }}" {{ old('character_id', $timeline->character_id) == $character->id ? 'selected' : '' }}>
-                            {{ $character->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('character_id') <p class="form-error">{{ $message }}</p> @enderror
-                <div class="form-hint">💡 Выберите персонажа, связанного с этим событием (опционально).</div>
-            </div>
-
-            <!-- Связь с планетой -->
-            <div class="form-group">
-                <label for="planet_id" class="form-label">Связанная планета</label>
-                <select id="planet_id" name="planet_id" class="form-input">
-                    <option value="">Не выбрана</option>
-                    @foreach($planets ?? [] as $planet)
-                        <option value="{{ $planet->id }}" {{ old('planet_id', $timeline->planet_id) == $planet->id ? 'selected' : '' }}>
-                            {{ $planet->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('planet_id') <p class="form-error">{{ $message }}</p> @enderror
-                <div class="form-hint">💡 Выберите планету, связанную с этим событием (опционально).</div>
+                <div class="form-hint">💡 Выберите тип события</div>
             </div>
 
             <!-- Текущее изображение -->
             <div class="form-group">
                 <label class="form-label">Текущее изображение</label>
                 <div style="display:flex;align-items:center;gap:1rem;">
-                    <img src="{{ $timeline->image_url }}" alt="{{ $timeline->title }}" style="width:80px;height:80px;border-radius:0.5rem;object-fit:cover;border:2px solid rgba(74,158,255,0.2);">
-                    <span style="font-size:0.875rem;color:var(--text-secondary);">
-                        @if($timeline->image)
-                            Загружено
-                        @else
-                            Стандартное изображение
-                        @endif
-                    </span>
+                    @if($timeline->image)
+                        <img src="{{ $timeline->image_url }}" alt="{{ $timeline->title }}" style="width:80px;height:80px;object-fit:cover;border-radius:0.5rem;border:2px solid rgba(74,158,255,0.2);">
+                        <span style="font-size:0.875rem;color:var(--text-secondary);">Загружено</span>
+                    @else
+                        <div style="width:80px;height:80px;border-radius:0.5rem;background:{{ $timeline->type_color }}20;border:2px solid {{ $timeline->type_color }};display:flex;align-items:center;justify-content:center;font-size:2rem;">
+                            {{ $timeline->type_emoji }}
+                        </div>
+                        <span style="font-size:0.875rem;color:var(--text-secondary);">Нет изображения</span>
+                    @endif
                 </div>
             </div>
 

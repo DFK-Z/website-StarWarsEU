@@ -1,13 +1,17 @@
 /* ========================================
    TIMELINE.CSS — Стили для хронологии
+   Версия: 2.0
+   Стиль: Star Wars EU / Космический неон
    ======================================== */
 
+/* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
 .timeline-container {
     max-width: 1280px;
     margin: 0 auto;
     padding: 2rem 1.5rem;
 }
 
+/* ===== ЗАГОЛОВОК ===== */
 .timeline-header {
     display: flex;
     align-items: center;
@@ -24,6 +28,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    letter-spacing: -0.025em;
 }
 
 .timeline-header-content p {
@@ -43,6 +48,10 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    border: none;
+    cursor: pointer;
 }
 
 .btn-create:hover {
@@ -50,10 +59,21 @@
     box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
 }
 
-.alert-success {
+.btn-create span {
+    font-size: 1.125rem;
+}
+
+/* ===== АЛЕРТЫ ===== */
+.alert {
     padding: 1rem;
     border-radius: 0.75rem;
     margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.alert-success {
     background: rgba(74, 158, 255, 0.08);
     border: 1px solid rgba(74, 158, 255, 0.15);
     color: #4A9EFF;
@@ -64,11 +84,12 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 2rem;
-    padding: 0.5rem;
-    background: rgba(27, 32, 40, 0.3);
-    border-radius: 0.75rem;
+    margin-bottom: 2.5rem;
+    padding: 0.75rem;
+    background: rgba(27, 32, 40, 0.4);
+    border-radius: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
 }
 
 .filter-btn {
@@ -76,9 +97,10 @@
     border-radius: 0.5rem;
     color: var(--text-secondary);
     text-decoration: none;
+    transition: all 0.3s ease;
     font-size: 0.875rem;
     font-weight: 500;
-    transition: all 0.3s ease;
+    border: 1px solid transparent;
 }
 
 .filter-btn:hover {
@@ -89,109 +111,165 @@
 .filter-btn.active {
     background: rgba(74, 158, 255, 0.12);
     color: #4A9EFF;
-    border: 1px solid rgba(74, 158, 255, 0.15);
+    border-color: rgba(74, 158, 255, 0.15);
 }
 
-/* ===== СПИСОК СОБЫТИЙ ===== */
+/* ===== ХРОНОЛОГИЯ ===== */
 .timeline-list {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
+}
+
+.timeline-year-group {
+    position: relative;
+}
+
+.timeline-year {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+}
+
+.year-label {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: rgba(74, 158, 255, 0.08);
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(74, 158, 255, 0.1);
+    white-space: nowrap;
+    letter-spacing: 0.025em;
+}
+
+.year-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, rgba(74, 158, 255, 0.15), transparent);
+}
+
+/* ===== ЭЛЕМЕНТЫ ХРОНОЛОГИИ ===== */
+.timeline-items {
+    display: flex;
+    flex-direction: column;
     gap: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+/* Вертикальная линия */
+.timeline-items::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(74, 158, 255, 0.1), rgba(74, 158, 255, 0.05));
 }
 
 .timeline-item {
     display: flex;
     align-items: stretch;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
     background: rgba(27, 32, 40, 0.4);
     border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    overflow: hidden;
+    border-left: 4px solid #4A9EFF;
     text-decoration: none;
-    transition: all 0.3s ease;
     color: inherit;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .timeline-item:hover {
-    border-color: rgba(74, 158, 255, 0.2);
     background: rgba(27, 32, 40, 0.6);
-    transform: translateX(4px);
+    transform: translateX(6px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-.timeline-year {
-    min-width: 100px;
-    padding: 1rem 1.5rem;
-    background: rgba(74, 158, 255, 0.06);
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #4A9EFF;
+.timeline-item-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    width: 2.5rem;
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.timeline-content {
-    padding: 1rem 1.5rem;
+.timeline-item-content {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    min-width: 0;
 }
 
-.timeline-title {
-    font-size: 1.125rem;
+.timeline-item-content h3 {
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+    margin-bottom: 0.125rem;
+    transition: color 0.3s ease;
 }
 
-.timeline-type {
+.timeline-item:hover .timeline-item-content h3 {
+    color: #4A9EFF;
+}
+
+.timeline-item-type {
     font-size: 0.65rem;
     font-weight: 600;
-    padding: 0.125rem 0.5rem;
-    border-radius: 9999px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    opacity: 0.8;
+    display: inline-block;
+    padding: 0.0625rem 0.5rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.03);
 }
 
-.timeline-type.novel {
-    background: rgba(57, 255, 20, 0.12);
-    color: #39FF14;
-    border: 1px solid rgba(57, 255, 20, 0.15);
-}
-
-.timeline-type.comic {
-    background: rgba(255, 23, 68, 0.12);
-    color: #FF1744;
-    border: 1px solid rgba(255, 23, 68, 0.15);
-}
-
-.timeline-type.game {
-    background: rgba(245, 176, 65, 0.12);
-    color: #F5B041;
-    border: 1px solid rgba(245, 176, 65, 0.15);
-}
-
-.timeline-type.movie {
-    background: rgba(74, 158, 255, 0.12);
-    color: #4A9EFF;
-    border: 1px solid rgba(74, 158, 255, 0.15);
-}
-
-.timeline-type.general {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.timeline-description {
+.timeline-item-content p {
     color: var(--text-secondary);
     font-size: 0.875rem;
     margin-top: 0.25rem;
+    line-height: 1.5;
+}
+
+.timeline-item-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+.timeline-item-actions .btn-edit,
+.timeline-item-actions .btn-delete {
+    padding: 0.25rem 0.5rem;
+    background: transparent;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+    line-height: 1;
+}
+
+.timeline-item-actions .btn-edit {
+    color: #4A9EFF;
+}
+
+.timeline-item-actions .btn-edit:hover {
+    background: rgba(74, 158, 255, 0.08);
+}
+
+.timeline-item-actions .btn-delete {
+    color: #E04A5F;
+}
+
+.timeline-item-actions .btn-delete:hover {
+    background: rgba(224, 74, 95, 0.08);
 }
 
 /* ===== ПУСТОЕ СОСТОЯНИЕ ===== */
@@ -231,40 +309,208 @@
     box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
 }
 
-/* ===== АДАПТИВНОСТЬ ===== */
-@media (max-width: 640px) {
-    .timeline-item {
-        flex-direction: column;
-    }
+/* ========================================
+   СТРАНИЦА ДЕТАЛЬНОГО ПРОСМОТРА
+   ======================================== */
 
-    .timeline-year {
-        min-width: auto;
-        padding: 0.5rem 1rem;
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        justify-content: flex-start;
-        font-size: 1rem;
-    }
+.timeline-detail {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
 
-    .timeline-content {
-        padding: 0.75rem 1rem;
-    }
+.timeline-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
 
-    .timeline-title {
-        font-size: 1rem;
-    }
+.back-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+}
 
-    .timeline-filters {
-        gap: 0.25rem;
-    }
+.back-link:hover {
+    color: var(--text-primary);
+}
 
-    .filter-btn {
-        font-size: 0.75rem;
-        padding: 0.375rem 0.75rem;
+.timeline-detail-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.timeline-detail-actions .btn-edit,
+.timeline-detail-actions .btn-delete {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.timeline-detail-actions .btn-edit {
+    background: rgba(74, 158, 255, 0.12);
+    color: #4A9EFF;
+}
+
+.timeline-detail-actions .btn-edit:hover {
+    background: rgba(74, 158, 255, 0.2);
+}
+
+.timeline-detail-actions .btn-delete {
+    background: rgba(224, 74, 95, 0.12);
+    color: #E04A5F;
+}
+
+.timeline-detail-actions .btn-delete:hover {
+    background: rgba(224, 74, 95, 0.2);
+}
+
+.timeline-detail-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2.5rem;
+}
+
+@media (max-width: 768px) {
+    .timeline-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 }
 
-/* ===== ФОРМА СОЗДАНИЯ/РЕДАКТИРОВАНИЯ ===== */
+.timeline-detail-image {
+    border-radius: 1rem;
+    overflow: hidden;
+    background: rgba(27, 32, 40, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.timeline-detail-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.timeline-detail-placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+}
+
+.timeline-detail-info h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.025em;
+}
+
+.timeline-detail-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.timeline-detail-year {
+    margin-bottom: 1.5rem;
+}
+
+.year-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: rgba(245, 176, 65, 0.12);
+    border: 1px solid rgba(245, 176, 65, 0.15);
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #F5B041;
+}
+
+.timeline-detail-description {
+    margin-top: 1.5rem;
+}
+
+.timeline-detail-description h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.description-content {
+    background: rgba(27, 32, 40, 0.3);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 0.9375rem;
+}
+
+.timeline-detail-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 640px) {
+    .timeline-detail-meta {
+        grid-template-columns: 1fr;
+    }
+}
+
+.meta-item {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.meta-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.meta-value {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-top: 0.125rem;
+}
+
+/* ========================================
+   ФОРМЫ СОЗДАНИЯ/РЕДАКТИРОВАНИЯ
+   ======================================== */
+
 .timeline-form {
     max-width: 900px;
     margin: 0 auto;
@@ -284,24 +530,6 @@
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--text-primary);
-}
-
-.back-link {
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: color 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 0.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.back-link:hover {
-    color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.08);
 }
 
 .form-grid {
@@ -358,6 +586,11 @@
 
 .form-input::placeholder {
     color: var(--text-muted);
+}
+
+textarea.form-input {
+    resize: vertical;
+    min-height: 120px;
 }
 
 select.form-input {
@@ -473,7 +706,43 @@ select.form-input {
     border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 640px) {
+    .timeline-container {
+        padding: 1rem;
+    }
+
+    .timeline-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .timeline-filters {
+        gap: 0.25rem;
+        padding: 0.5rem;
+    }
+
+    .filter-btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .timeline-items {
+        padding-left: 0.75rem;
+    }
+
+    .timeline-item {
+        flex-wrap: wrap;
+        padding: 0.75rem 1rem;
+    }
+
+    .timeline-item-actions {
+        width: 100%;
+        justify-content: flex-end;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
     .timeline-form {
         padding: 1rem;
     }
@@ -491,5 +760,13 @@ select.form-input {
     .form-actions .btn-cancel {
         width: 100%;
         justify-content: center;
+    }
+
+    .timeline-detail {
+        padding: 1rem;
+    }
+
+    .timeline-detail-info h1 {
+        font-size: 1.75rem;
     }
 }
