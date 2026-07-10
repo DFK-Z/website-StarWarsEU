@@ -1,0 +1,168 @@
+/* ========================================
+   SEARCH.CSS — Стили для страницы поиска
+   ======================================== */
+
+.search-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.search-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.search-header h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    background: linear-gradient(to right, #F5B041, #E04A5F, #4A9EFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.search-header p {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+    margin-top: 0.25rem;
+}
+
+.search-header p strong {
+    color: var(--text-primary);
+}
+
+/* ===== РЕЗУЛЬТАТЫ ===== */
+.search-section {
+    margin-bottom: 2.5rem;
+}
+
+.search-section h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.search-results-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(27, 32, 40, 0.4);
+    border-radius: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.search-result-item:hover {
+    background: rgba(27, 32, 40, 0.6);
+    border-color: rgba(74, 158, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.search-result-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid rgba(74, 158, 255, 0.1);
+}
+
+.search-result-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid;
+}
+
+.search-result-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.search-result-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.search-result-alias {
+    font-size: 0.8rem;
+    color: #4A9EFF;
+    font-weight: 500;
+}
+
+.search-result-year {
+    font-size: 0.8rem;
+    color: #F5B041;
+    font-weight: 500;
+}
+
+.search-result-type {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.0625rem 0.5rem;
+    border-radius: 9999px;
+    margin-left: 0.5rem;
+}
+
+/* ===== ПУСТОЕ СОСТОЯНИЕ ===== */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(27, 32, 40, 0.3);
+    border-radius: 1rem;
+    border: 2px dashed rgba(255, 255, 255, 0.05);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 640px) {
+    .search-container {
+        padding: 1rem;
+    }
+
+    .search-result-item {
+        padding: 0.75rem;
+    }
+
+    .search-result-image,
+    .search-result-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .search-result-info h3 {
+        font-size: 0.875rem;
+    }
+}

@@ -10,7 +10,10 @@
         <div class="hero-badge">
             <span class="hero-badge-dot"></span>
             @auth
-                Добро пожаловать, Хранитель {{ Auth::user()->name }}! 👋
+                Добро пожаловать, Хранитель {{ Auth::user()->name }}!
+                <span class="role-badge {{ Auth::user()->role_class }}" style="font-size:0.5rem;padding:0.0625rem 0.375rem;">
+                    {{ Auth::user()->role_name }}
+                </span>
             @else
                 Legends Timeline — Expanded Universe
             @endauth
@@ -53,7 +56,7 @@
         <div class="card">
             <span class="card-icon">🌍</span>
             <div class="card-title">Планеты</div>
-            <div class="card-text">Корусант, Татуин, Бастион и многие другие</div>
+            <div class="card-text">Корусант, Татуин, Бастион</div>
         </div>
     </div>
 </section>

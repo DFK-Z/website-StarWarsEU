@@ -7,6 +7,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\TimelineController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\PrivateMessageController;
+use App\Http\Controllers\SearchController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,12 +47,8 @@ Route::middleware('auth')->group(function () {
 // ===== ПЕРСОНАЖИ =====
 Route::resource('characters', CharacterController::class);
 
-// Хронология
-Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
-Route::get('/timeline/{timeline}', [TimelineController::class, 'show'])->name('timeline.show');
-
 // ===== ХРОНОЛОГИЯ =====
-// ===== ВАЖНО: ИСПОЛЬЗУЙТЕ ЭТОТ ВАРИАНТ! =====
+// !!! ВАЖНО: /create ДОЛЖЕН БЫТЬ ПЕРВЫМ !!!
 Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
 Route::get('/timeline/create', [TimelineController::class, 'create'])->name('timeline.create');
 Route::post('/timeline', [TimelineController::class, 'store'])->name('timeline.store');
@@ -56,3 +56,26 @@ Route::get('/timeline/{timeline}', [TimelineController::class, 'show'])->name('t
 Route::get('/timeline/{timeline}/edit', [TimelineController::class, 'edit'])->name('timeline.edit');
 Route::put('/timeline/{timeline}', [TimelineController::class, 'update'])->name('timeline.update');
 Route::delete('/timeline/{timeline}', [TimelineController::class, 'destroy'])->name('timeline.destroy');
+
+// ===== ЧАТ =====
+Route::middleware('auth')->group(function () {
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/rules', [ChatController::class, 'rules'])->name('chat.rules'); // или использовать index
+    Route::post('/chat/agree', [ChatController::class, 'agree'])->name('chat.agree');
+    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+
+    // Управление баном (только для модераторов и админов)
+    Route::post('/chat/ban/{user}', [ChatController::class, 'banUser'])->name('chat.ban')
+        ->middleware('role:moderator,admin');
+    Route::post('/chat/unban/{user}', [ChatController::class, 'unbanUser'])->name('chat.unban')
+        ->middleware('role:moderator,admin');
+});
+// ===== ЛИЧНЫЕ СООБЩЕНИЯ =====
+Route::middleware('auth')->prefix('dm')->name('dm.')->group(function () {
+    Route::get('/', [PrivateMessageController::class, 'index'])->name('index');
+    Route::get('/{user}', [PrivateMessageController::class, 'show'])->name('show');
+    Route::post('/send', [PrivateMessageController::class, 'store'])->name('send');
+    Route::get('/unread/count', [PrivateMessageController::class, 'unreadCount'])->name('unread');
+});
+// ===== ПОИСК =====
+Route::get('/search', [SearchController::class, 'index'])->name('search');

@@ -16,7 +16,12 @@
                 {{ substr($user->name, 0, 1) }}
             @endif
         </div>
-        <div class="profile-name">{{ $user->name }}</div>
+        <div class="profile-name">
+            {{ $user->name }}
+            <span class="role-badge {{ $user->role_class }}">
+                {{ $user->role_name }}
+            </span>
+        </div>
         <div class="profile-email">{{ $user->email }}</div>
         <div class="profile-member-since">
             🗓️ Хранитель с {{ $user->created_at->format('d.m.Y') }}
@@ -75,6 +80,17 @@
                 <span class="value">{{ $user->email }}</span>
             </div>
             <div class="account-info-item">
+                <span class="label">Роль</span>
+                <span class="value status" style="color: {{ match($user->role) {
+                    'admin' => '#FF1744',
+                    'moderator' => '#4A9EFF',
+                    'guardian' => '#9B59B6',
+                    default => '#39FF14',
+                } }};">
+                    {{ $user->role_name }}
+                </span>
+            </div>
+            <div class="account-info-item">
                 <span class="label">Дата регистрации</span>
                 <span class="value">{{ $user->created_at->format('d.m.Y H:i') }}</span>
             </div>
@@ -83,6 +99,22 @@
                 <span class="value status">✅ Активен</span>
             </div>
         </div>
+
+        @if($user->isAdmin())
+            <div style="margin-top:1.5rem;padding:1rem;background:rgba(255,23,68,0.05);border:1px solid rgba(255,23,68,0.1);border-radius:0.75rem;">
+                <h4 style="color:#FF1744;font-weight:600;font-size:0.875rem;">⚡ Верховный Хранитель</h4>
+                <p style="color:var(--text-secondary);font-size:0.8125rem;margin-top:0.25rem;">
+                    У вас есть полный доступ ко всем функциям сайта.
+                </p>
+            </div>
+        @elseif($user->isModerator())
+            <div style="margin-top:1.5rem;padding:1rem;background:rgba(74,158,255,0.05);border:1px solid rgba(74,158,255,0.1);border-radius:0.75rem;">
+                <h4 style="color:#4A9EFF;font-weight:600;font-size:0.875rem;">⚔️ Рыцарь Хронологии</h4>
+                <p style="color:var(--text-secondary);font-size:0.8125rem;margin-top:0.25rem;">
+                    Вы следите за порядком в хронологии и помогаете сообществу.
+                </p>
+            </div>
+        @endif
     </main>
 </div>
 @endsection
